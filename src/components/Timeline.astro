@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatPeriod } from '../lib/data';
+interface Props { title: string; entries: Array<CollectionEntry<'education'> | CollectionEntry<'experience'>>; }
+const { title, entries } = Astro.props;
+---
+<div class="timeline-group reveal">
+  <h3>{title}</h3>
+  <div class="timeline">
+    {entries.map((entry) => {
+      const period = formatPeriod(entry.data.period_start, entry.data.period_end, entry.data.ongoing);
+      const body = entry.body?.trim() ?? '';
+      const summary = body.split(/\n\n/)[0];
+      const hasMore = body.length > summary.length + 20;
+      return (
+        <article class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          {period && <p class="timeline-period">{period}</p>}
+          <h4>{entry.data.title}</h4>
+          <p>{summary}</p>
+          {hasMore && (
+            <details>
+              <summary><span class="when-closed">展開內容</span><span class="when-open">收合內容</span></summary>
+              <p>{body.slice(summary.length).trim()}</p>
+            </details>
+          )}
+        </article>
+      );
+    })}
+  </div>
+</div>

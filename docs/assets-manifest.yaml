@@ -1,0 +1,25 @@
+assets: []
+policy: 目前沒有附入實體素材。public/assets 只有目錄；不得將預定檔名當作已存在素材。
+requested:
+- project_id: stp-ai-customer-service
+  items:
+  - 評測摘要
+  - 遮罩流程圖
+  - Demo 錄影
+  - 競賽證明
+- project_id: yoxi-service-proposal
+  items:
+  - 問卷摘要
+  - 提案 PDF
+- project_id: checkmate
+  items:
+  - 前端修改紀錄
+  - 模擬操作影片
+- project_id: in-between
+  items:
+  - 作品影片
+  - 華山展示照片
+- project_id: camp-cooking
+  items:
+  - 企劃節錄
+  - 授權活動照片

@@ -1,0 +1,30 @@
+name: 許芳瑜
+english_name: Verna
+headline: 串起需求、團隊與實作，讓想法走向成果。
+target_role: Project Management Intern
+hero_intro: 結合商管邏輯與人文洞察，透過需求釐清、跨職能溝通與 AI 輔助實作，推進可檢視的專案成果。
+about:
+- 我就讀國立臺北大學，雙主修歷史與企業管理，關注 AI 如何應用於商務情境。人文訓練讓我習慣理解脈絡，商管學習則幫助我整理目標、限制與資源。
+- 在企業合作專案中，我擔任 11 人團隊組長，負責對外溝通、協調分工及進度追蹤，也參與資料整理與 n8n 流程設計。開發經驗讓我理解，清楚的需求與規格是團隊合作的共同基礎。
+- 我重視把事情推進，也願意回頭檢查自己的方法。曾因分工後缺乏共同理解而遇到進度落差，這讓我開始更重視原型、工作框架與及早求助。
+traits:
+- title: 需求轉譯
+  description: 從企業痛點與使用者疑慮整理方案條件。
+  project_ids:
+  - stp-ai-customer-service
+  - yoxi-service-proposal
+- title: 協作推進
+  description: 追蹤卡點、協調資源，調整分工後的溝通方式。
+  project_ids:
+  - stp-ai-customer-service
+  - camp-cooking
+- title: 自主學習與實作
+  description: 以清楚規格與 AI 協作，參與原型開發並持續補強技術理解。
+  project_ids:
+  - checkmate
+contact:
+  email: fannyhsu320@gmail.com
+  github: null
+  linkedin: null
+resume: null
+photo: null

@@ -1,0 +1,63 @@
+- id: project-coordination
+  name: 專案協作
+  category: 需求與進度
+  usage: 分工、週會、紀錄、卡點追蹤與資源協調。
+  project_ids:
+  - stp-ai-customer-service
+  - camp-cooking
+  tools:
+  - Notion
+  - Google Workspace
+- id: requirements
+  name: 需求與規格轉譯
+  category: 需求與進度
+  usage: 釐清企業期待、整理使用者需求、與 RD 確認產出規格。
+  project_ids:
+  - stp-ai-customer-service
+  - yoxi-service-proposal
+  - checkmate
+  tools: []
+- id: ai-workflow
+  name: AI 工作流程
+  category: AI 與技術
+  usage: 參與 n8n 流程設計、結構化資料整理與測試。
+  project_ids:
+  - stp-ai-customer-service
+  tools:
+  - n8n
+- id: ai-development
+  name: AI 輔助開發
+  category: AI 與技術
+  usage: 以規格對話協助實作，參與前端優化及資料串接；具 Python、C++ 基礎。
+  project_ids:
+  - checkmate
+  tools:
+  - AI 輔助開發
+  - Python 基礎
+  - C++ 基礎
+- id: presentation
+  name: 提案與資訊表達
+  category: 分析與溝通
+  usage: 整理問題、功能與效益，製作簡報並依對象調整說明。
+  project_ids:
+  - yoxi-service-proposal
+  - camp-cooking
+  - museum-exhibition
+  tools:
+  - Canva
+  - PowerPoint
+- id: data-analysis
+  name: 問卷資料分析
+  category: 分析與溝通
+  usage: 以 JASP 整理資料並檢視相關係數；研究案例待核對。
+  project_ids:
+  - yoxi-service-proposal
+  tools:
+  - JASP
+- id: creative-coding
+  name: 生成式視覺
+  category: AI 與技術
+  usage: p5.js 基礎與 AI 輔助視覺創作，案例補齊反思後再公開。
+  project_ids: []
+  tools:
+  - p5.js 基礎

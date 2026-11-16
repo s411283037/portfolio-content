@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { href, profile } from '../../lib/data';
+const projects = (await getCollection('projects', ({ data }) => data.status === 'published'))
+  .sort((a, b) => a.data.order - b.data.order || a.id.localeCompare(b.id));
+---
+<BaseLayout title={`全部專案｜${profile.name}`} description="許芳瑜的已發布專案案例。">
+  <header class="case-hero">
+    <div class="shell">
+      <a class="back-link" href={`${href('')}#projects`}>← 返回首頁專案區</a>
+      <p class="eyebrow">Projects</p>
+      <h1>全部專案</h1>
+      <p class="case-summary">依資料狀態呈現已確認內容；草稿不會出現在此頁。</p>
+    </div>
+  </header>
+  <section class="content-section">
+    <div class="shell project-grid">
+      {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+    </div>
+  </section>
+</BaseLayout>

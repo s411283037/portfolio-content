@@ -1,0 +1,138 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Timeline from '../components/Timeline.astro';
+import { groupSkills, href, profile } from '../lib/data';
+
+const byOrder = <T extends { data: { order: number }; id: string }>(a: T, b: T) => a.data.order - b.data.order || a.id.localeCompare(b.id);
+const projects = (await getCollection('projects', ({ data }) => data.status === 'published')).sort(byOrder);
+const featured = projects.filter(({ data }) => data.featured).slice(0, 3);
+const additional = projects.filter(({ data }) => !featured.some(({ data: f }) => f.id === data.id));
+const education = (await getCollection('education', ({ data }) => data.status === 'published')).sort(byOrder);
+const experience = (await getCollection('experience', ({ data }) => data.status === 'published')).sort(byOrder);
+const certifications = (await getCollection('certifications', ({ data }) => data.status === 'published')).sort(byOrder);
+const skillGroups = groupSkills();
+---
+<BaseLayout title={`${profile.name}｜專案作品集`} description={profile.hero_intro}>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="shell hero-grid">
+      <div class="hero-copy reveal is-visible">
+        <p class="eyebrow">{profile.target_role} · Portfolio</p>
+        <h1 id="hero-title">{profile.name}</h1>
+        <p class="hero-headline">{profile.headline}</p>
+        <p class="hero-intro">{profile.hero_intro}</p>
+        <div class="hero-actions">
+          <a class="button" href="#about">認識我</a>
+          <a class="button secondary" href="#projects">查看專案</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-line"></div>
+        <span class="hero-label">Context · Collaboration · Craft</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="content-section surface-section">
+    <div class="shell about-grid">
+      <SectionHeading number="01" eyebrow="About" title="理解脈絡，也推進實作" />
+      <div class="about-copy reveal">
+        {profile.about.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <div class="traits reveal" aria-label="工作特質">
+        {profile.traits.map((trait, index) => (
+          <article class="trait">
+            <span class="number">0{index + 1}</span>
+            <h3>{trait.title}</h3>
+            <p>{trait.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="content-section">
+    <div class="shell">
+      <SectionHeading number="02" eyebrow="Experience" title="學習與實務軌跡" description="從不同現場累積需求理解、協作與驗證的方法。" />
+      <div class="timeline-columns">
+        <Timeline title="工作與實務經歷" entries={experience} />
+        <Timeline title="學歷與培訓" entries={education} />
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="content-section surface-section">
+    <div class="shell">
+      <SectionHeading number="03" eyebrow="Selected Projects" title="從問題走到可檢視的成果" description="每個案例都區分個人貢獻與團隊成果，並保留實際限制。" />
+      <div class="project-grid">
+        {featured.map((project, index) => <ProjectCard project={project} index={index} />)}
+      </div>
+      {additional.length > 0 && (
+        <div class="reveal">
+          <p class="all-projects eyebrow">其他已發布案例</p>
+          <div class="project-list">
+            {additional.map((project) => (
+              <a href={href(`projects/${project.data.id}/`)}>
+                <span>{project.data.title}</span><span aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section id="skills" class="content-section">
+    <div class="shell">
+      <SectionHeading number="04" eyebrow="Skills & Credentials" title="能力放在真實情境裡說明" />
+      <div class="skills-grid">
+        <div class="reveal">
+          {[...skillGroups.entries()].map(([category, items]) => (
+            <div class="skill-category">
+              <h3>{category}</h3>
+              <div class="skill-list">
+                {items.map((skill) => (
+                  <article class="skill">
+                    <h4>{skill.name}</h4>
+                    <p>{skill.usage}</p>
+                    {skill.tools.length > 0 && <p class="tools">{skill.tools.join(' · ')}</p>}
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="credentials reveal">
+          <h3>證照與語言</h3>
+          <ul class="credential-list">
+            {certifications.map((item) => (
+              <li>
+                <strong>{item.data.title}</strong>
+                {item.data.issuer && <span>{item.data.issuer}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="shell">
+      <div class="contact-grid reveal">
+        <div class="section-index" aria-hidden="true">05</div>
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>期待與你一起，把問題梳理清楚並推進下一步。</h2>
+          {profile.contact.email && <a class="contact-link" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>}
+        </div>
+      </div>
+      <div class="footer-note">
+        <span>© 2026 {profile.name}</span>
+        <span>以真實資料與共用內容系統建立</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

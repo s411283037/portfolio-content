@@ -1,0 +1,27 @@
+{
+  "name": "verna-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/astro.mjs dev",
+    "build": "npm run validate && node scripts/astro.mjs build",
+    "preview": "node scripts/astro.mjs preview",
+    "validate": "node scripts/validate-content.mjs",
+    "check": "npm run validate && node scripts/astro.mjs check",
+    "verify": "npm run build && node scripts/check-output.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "latest",
+    "astro": "latest",
+    "typescript": "latest",
+    "yaml": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-win32-x64-msvc": "1.2.19"
+  }
+}

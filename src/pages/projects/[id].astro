@@ -1,0 +1,54 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatPeriod, href, profile } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => data.status === 'published');
+  return projects.map((project) => ({ params: { id: project.data.id }, props: { project } }));
+}
+
+interface Props { project: CollectionEntry<'projects'>; }
+const { project } = Astro.props;
+const { Content, headings } = await render(project);
+const sections = headings.filter((heading) => heading.depth === 2);
+const period = formatPeriod(project.data.period_start, project.data.period_end, project.data.ongoing);
+const published = (await getCollection('projects', ({ data }) => data.status === 'published')).sort((a, b) => a.data.order - b.data.order);
+const currentIndex = published.findIndex(({ data }) => data.id === project.data.id);
+const next = published[(currentIndex + 1) % published.length];
+---
+<BaseLayout title={`${project.data.title}｜${profile.name}`} description={project.data.summary}>
+  <header class="case-hero">
+    <div class="shell">
+      <a class="back-link" href={`${href('')}#projects`}>← 返回專案區</a>
+      <p class="eyebrow">{project.data.category} · Case Study</p>
+      <h1>{project.data.title}</h1>
+      <p class="case-summary">{project.data.summary}</p>
+      <dl class="case-facts">
+        <div><dt>我的角色</dt><dd>{project.data.role}</dd></div>
+        {period && <div><dt>期間</dt><dd>{period}</dd></div>}
+        {project.data.team_size && <div><dt>團隊</dt><dd>{project.data.team_size} 人</dd></div>}
+        <div><dt>目前階段</dt><dd>已完成</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <div class="case-layout shell">
+    {sections.length > 0 && (
+      <nav class="case-toc" aria-label="案例章節">
+        <p>閱讀章節</p>
+        <ol>{sections.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text.replace(/^\d+\.\s*/, '')}</a></li>)}</ol>
+      </nav>
+    )}
+    <article class="prose"><Content /></article>
+  </div>
+
+  {next && next.data.id !== project.data.id && (
+    <aside class="case-next">
+      <div class="narrow">
+        <p class="eyebrow">下一個案例</p>
+        <a href={href(`projects/${next.data.id}/`)}>{next.data.title} →</a>
+      </div>
+    </aside>
+  )}
+</BaseLayout>
